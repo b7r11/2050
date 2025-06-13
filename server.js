@@ -37,19 +37,21 @@ app.post('/verify-code', (req, res) => {
             return res.status(400).json({ success: false, message: "الكود غير موجود." });
         }
 
-        // حذف الكود من الذاكرة
-        delete codes[code];
-        console.log("تم حذف الكود:", code);
+        if (codes[code] <= 0) {
+            return res.status(400).json({ success: false, message: "تم استهلاك هذا الكود بالكامل." });
+        }
 
-        // كتابة الملف الجديد بعد الحذف
+        // خصم استخدام واحد من الكود
+        codes[code] -= 1;
+        console.log(`تم استخدام الكود: ${code} - المتبقي: ${codes[code]}`);
+
         fs.writeFile(codesFilePath, JSON.stringify(codes, null, 2), (err) => {
             if (err) {
                 console.error("خطأ في كتابة ملف الأكواد:", err);
                 return res.status(500).json({ success: false, message: "فشل في تحديث الأكواد." });
             }
 
-            console.log("تم حفظ التعديلات بنجاح.");
-            return res.json({ success: true, message: "تم التحقق من الكود بنجاح." });
+            return res.json({ success: true, message: `تم التحقق من الكود. المتبقي: ${codes[code]} استخدام.` });
         });
     });
 });
