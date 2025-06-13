@@ -17,7 +17,8 @@ app.post('/verify-code', (req, res) => {
         return res.status(400).json({ success: false, message: "يرجى إدخال الكود." });
     }
 
-    fs.readFile('codes.json', 'utf8', (err, data) => {
+    const codesFilePath = path.join(__dirname, 'codes.json');
+    fs.readFile(codesFilePath, 'utf8', (err, data) => {
         if (err) {
             console.error("خطأ في قراءة ملف الأكواد:", err);
             return res.status(500).json({ success: false, message: "خطأ في السيرفر." });
@@ -32,18 +33,22 @@ app.post('/verify-code', (req, res) => {
         }
 
         if (!(code in codes)) {
+            console.log("الكود غير موجود:", code);
             return res.status(400).json({ success: false, message: "الكود غير موجود." });
         }
 
-        // إذا الكود موجود نحذفه مباشرة
+        // حذف الكود من الذاكرة
         delete codes[code];
+        console.log("تم حذف الكود:", code);
 
-        fs.writeFile('codes.json', JSON.stringify(codes, null, 2), (err) => {
+        // كتابة الملف الجديد بعد الحذف
+        fs.writeFile(codesFilePath, JSON.stringify(codes, null, 2), (err) => {
             if (err) {
                 console.error("خطأ في كتابة ملف الأكواد:", err);
                 return res.status(500).json({ success: false, message: "فشل في تحديث الأكواد." });
             }
 
+            console.log("تم حفظ التعديلات بنجاح.");
             return res.json({ success: true, message: "تم التحقق من الكود بنجاح." });
         });
     });
