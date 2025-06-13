@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>سيرفر 2050 توريد يوزرات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <h1 class="fade">سيرفر 2050 لتوريد اليوزرات</h1>
+
+        <div class="cards">
+            <div class="card fade">توريد يوزرات انستقرام</div>
+            <div class="card fade">توفير كميات ضخمة</div>
+            <div class="card fade">أكواد حصرية للأعضاء</div>
+            <div class="card fade">دعم بوت وأدوات متنوعة</div>
+        </div>
+
+        <div class="fade" id="usercount">عدد اليوزرات المتوفرة: ...</div>
+
+        <div class="fade" id="codearea">
+            <input type="text" id="code" placeholder="ادخل الكود الخاص بك">
+            <button id="submit">تحقق</button>
+            <div id="error"></div>
+        </div>
+    </div>
+
+    <div id="second" style="display:none;">
+        <h1 class="fade">تم التحقق من الكود بنجاح</h1>
+        <button id="getusers">توريد 20 يوزر عشوائي</button>
+        <div id="users"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
