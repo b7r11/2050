@@ -1,5 +1,6 @@
-[
-  "CODE2025A",
-  "CODE2025B",
-  "CODE2025C"
-]
+{
+  "CODE123": true,
+  "CODE456": true,
+  "CODE789": true,
+  "WELCOME20": true
+}
